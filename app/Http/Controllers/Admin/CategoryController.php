@@ -39,8 +39,18 @@ class CategoryController extends BaseController
              $category->save();
            return $this->success(new CategoryResource($category),"success");
          }
-    }
 
+
+    }
+    public function show($category)
+    {
+        $data = Category::where('slug' , $category)->first();
+        return response()->json([
+            'data' => new categoryResource($data),
+            'con' => true,
+            'message' =>"updated"
+        ],200);
+    }
 
     /**
      * Update the specified resource in storage.
