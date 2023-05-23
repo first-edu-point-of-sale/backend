@@ -8,7 +8,12 @@ use Illuminate\Database\Eloquent\Model;
 class Customer extends Model
 {
     use HasFactory;
-    protected $fillable =[
-        'table'
-    ];
+    protected $guarded = [];
+
+
+    public function carts()
+    {
+        return $this->belongsToMany(Product::class, 'carts','customer_id', 'product_id')->withPivot('quantity');
+    }
+
 }
