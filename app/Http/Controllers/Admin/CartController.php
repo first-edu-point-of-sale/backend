@@ -1,22 +1,20 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
+use App\Http\Resources\CartResource;
 use App\Models\Cart;
 use App\Models\Customer;
-use Illuminate\Support\Str;
 use Illuminate\Http\Request;
-use App\Http\Resources\CartResource;
-use App\Http\Controllers\BaseController;
 use Illuminate\Support\Facades\Validator;
 
-class CartController extends BaseController
+class CartController extends Controller
 {
     public function index()
     {
-        return Customer::where('id',1)->first()->carts;
         $cart = CartResource::collection(Cart::all()) ;
-       return $this->success($cart,"all products");
+        return $this->success($cart,"all products");
     }
 
     /**
@@ -92,4 +90,5 @@ class CartController extends BaseController
         $cart = new CartResource(Cart::where('id$id',$id)->first());
         return $this->response("found",$cart);
     }
+
 }
