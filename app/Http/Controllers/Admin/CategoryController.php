@@ -20,7 +20,7 @@ class CategoryController extends Controller
             'message' =>"all categories"
         ],200);
     }
- 
+
     /**
      * Store a newly created resource in storage.
      *
@@ -32,7 +32,7 @@ class CategoryController extends Controller
          $validator = Validator::make($request->all(), [
              'name' => 'required|max:255',
          ]);
- 
+
          if ($validator->fails()) {
              return response()->json([
                  "error" => $validator->errors()
@@ -48,10 +48,18 @@ class CategoryController extends Controller
                  'message' =>"all categories"
              ],201);
          }
-       
+
     }
- 
- 
+    public function show($category)
+    {
+        $data = Category::where('slug' , $category)->first();
+        return response()->json([
+            'data' => new categoryResource($data),
+            'con' => true,
+            'message' =>"updated"
+        ],200);
+    }
+
     /**
      * Update the specified resource in storage.
      *
@@ -61,11 +69,11 @@ class CategoryController extends Controller
      */
     public function update(Request $request ,$category)
     {
- 
+
          $validator = Validator::make($request->all(), [
              'name' => 'required|max:255',
          ]);
- 
+
          if ($validator->fails()) {
              return response()->json([
                  "error" => $validator->errors()
@@ -82,7 +90,7 @@ class CategoryController extends Controller
              ],200);
          }
     }
- 
+
     /**
      * Remove the specified resource from storage.
      *
