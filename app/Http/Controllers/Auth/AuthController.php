@@ -67,6 +67,7 @@ class AuthController extends BaseController
     }
     public function logout(Request $request)
     {
+        //delete the token in db
         $user = $request->user();
         $request->user()->currentAccessToken()->delete();
         return $this->response('',$user,[]);
