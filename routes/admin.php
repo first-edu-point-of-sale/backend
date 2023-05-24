@@ -13,3 +13,4 @@ Route::apiResource('products',ProductController::class);
 Route::apiResource('carts',CartController::class);
 
 Route::get('get-products-by-category/{category}' , [CustomerController::class , 'getProductsByCategory']);
+Route::post('take-order' , [CustomerController::class , 'takeOrder']);
