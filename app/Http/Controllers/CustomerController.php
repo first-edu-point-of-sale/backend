@@ -17,6 +17,8 @@ class CustomerController extends BaseController
 
     public function takeOrder(Request $request)
     {
-        return $request->all();
+        return response()->json([
+            "data" => $request->all()
+        ],200);
     }
 }

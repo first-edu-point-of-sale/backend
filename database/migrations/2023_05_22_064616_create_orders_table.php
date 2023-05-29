@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
 class CreateOrdersTable extends Migration
@@ -15,10 +16,9 @@ class CreateOrdersTable extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('customer_id');
-            $table->timestamp('order_date')->useCurrent()->format('d/m/Y');
-            $table->string('payment_status');
-            $table->foreign('customer_id')->references('id')->on('customers');
+            $table->integer('table');
+            $table->string('status')->default('pending');
+            $table->date('order_date')->default(DB::raw('CURRENT_TIMESTAMP'));
             $table->timestamps();
         });
     }
