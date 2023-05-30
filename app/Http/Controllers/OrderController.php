@@ -10,23 +10,39 @@ use Illuminate\Http\Request;
 
 class OrderController extends BaseController
 {
-    public function allOrder()
+    public function getOrders()
     {
-        $order = Order::all();
-        return $this->response('',$order,[]);
+        $orders = Order::with('order_items.product')->get();
+        return $this->response('',$orders,[]);
+    }
+
+    public function getOrder($order)
+    {
+        $order = Order::where('id' , $order)->with('order_items.product')->first();
+        return $this->response('' , $order , []);
     }
 
     public function createOrder(Request $request)
     {
-        $order = new Order();
-        $order->table = $request->table;
-        $order->save();
-        $order_item = new OrderItem();
-        $order_item->order_id = $order->id;
-        $order_item->product_id = $request->product_id;
-        $order_item->quantity = $request->quantity;
-        $order_item->save();
-        return $this->response('',$order,[]);
+        $existOrder = Order::where('table' , $request->table)->first();
+        if ($existOrder) {
+            $order_item = new OrderItem();
+            $order_item->order_id = $existOrder->id;
+            $order_item->product_id = $request->product_id;
+            $order_item->quantity = $request->quantity;
+            $order_item->save();
+            return $this->response('order added',[$existOrder , $order_item],[]);
+        } else {
+            $order = new Order();
+            $order->table = $request->table;
+            $order->save();
+            $order_item = new OrderItem();
+            $order_item->order_id = $order->id;
+            $order_item->product_id = $request->product_id;
+            $order_item->quantity = $request->quantity;
+            $order_item->save();
+            return $this->response('order created',[$order , $order_item],[]);
+        }
     }
 
 

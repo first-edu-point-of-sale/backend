@@ -12,9 +12,9 @@ Route::post('logout', [AuthController::class,'logout']);
 
 Route::apiResource('categories',CategoryController::class);
 Route::apiResource('products',ProductController::class);
-Route::apiResource('carts',CartController::class);
 
 Route::get('get-products-by-category/{category}' , [CustomerController::class , 'getProductsByCategory']);
 Route::post('create-order' , [OrderController::class , 'createOrder']);
-Route::post('take-order' , [OrderController::class , 'takeOrder']);
+Route::get('get-orders'  , [OrderController::class , 'getOrders']);
+Route::get('get-orders/{order}'  , [OrderController::class , 'getOrder']);
 Route::delete('payment' , [OrderController::class , 'payment']);
