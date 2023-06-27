@@ -8,6 +8,7 @@ use App\Models\Order;
 use App\Models\OrderItem;
 use Illuminate\Http\Request;
 use App\Http\Controllers\BaseController;
+use App\Models\Record;
 
 class InvoiceController extends BaseController
 {
@@ -31,8 +32,22 @@ class InvoiceController extends BaseController
             'total' => $request->total
         ]);
         if ($invoice){
-            $order =   Order::where('id',$request->order)->delete();
-            OrderItem::where('order_id',$order)->delete();
+             Order::where('id',$request->order)->delete();
+            $orderitems =  OrderItem::with('product')->where('order_id',$request->order)->get();
+            
+            $orderitems->map(function ($orderitem) {
+                $record = new Record();
+                $record->product_id = $orderitem->product->id;
+                $record->category_id= $orderitem->product->category_id;
+                $record->unitprice = $orderitem->product->price * $orderitem->quantity;
+                $record->quantity = $orderitem->quantity;
+                
+                // Save the record
+                $record->save();
+                
+                // Delete the original OrderItem
+                $orderitem->delete();
+            });
             return $this->response('',['data' => $request->all()]);
         }else{
             return $this->response('something went wrong',[],404,false);
