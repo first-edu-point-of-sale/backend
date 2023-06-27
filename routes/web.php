@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\Customer;
+use App\Models\OrderItem;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -15,7 +16,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    
+    return OrderItem::with('product')->where('order_id',8)->get();
 });
 // Route::get('/create', function () {
 //     $customer = new Customer();
