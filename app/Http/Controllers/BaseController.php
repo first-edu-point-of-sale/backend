@@ -7,7 +7,7 @@ class BaseController extends Controller
 {
     public function success($data, $message = '')
     {
-        return $this->response('',$data->additional(['condition'=> true, 'message' => $message]));
+        return $this->response('',$data);
     }
     public function fail($errors = [], $code = 422, $message = '')
     {

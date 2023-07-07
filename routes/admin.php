@@ -18,6 +18,10 @@ Route::apiResource('invoices',InvoiceController::class);
 Route::get('get-products-by-category/{category}' , [CustomerController::class , 'getProductsByCategory']);
 Route::post('create-order' , [OrderController::class , 'createOrder']);
 Route::get('get-orders'  , [OrderController::class , 'getOrders']);
-Route::get('records'  , [RecordController::class , 'index']);
 Route::get('get-orders/{order}'  , [OrderController::class , 'getOrder']);
 Route::delete('payment' , [OrderController::class , 'payment']);
+Route::get('records'  , [RecordController::class , 'index']);
+Route::get('records-by-day/{day}'  , [RecordController::class , 'recordByDay']);
+Route::get('records-by-month/{month}'  , [RecordController::class , 'recordByMonth']);
+
+
