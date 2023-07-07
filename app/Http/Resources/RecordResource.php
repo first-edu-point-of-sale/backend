@@ -3,8 +3,8 @@
 namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
-use Carbon\Carbon;
-class InvoiceResource extends JsonResource
+
+class RecordResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -15,11 +15,12 @@ class InvoiceResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'id' =>$this->id,
-            'table' => $this->table,
-            'products' => json_decode($this->products),
-            'total' => $this->total,
-            'created_at' => Carbon::parse($this->created_at)->toDateTimeString()
+            'id' =>  $this->id,
+            'product' => $this->product->name,
+            'category' =>  $this->product->category->name,
+            'quantity' => $this->quantity,
+            'total' => $this->unitprice,
+            'date' => $this->created_at->format('d-m-y')
         ];
     }
 }

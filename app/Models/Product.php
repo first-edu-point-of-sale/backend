@@ -2,8 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\Record;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Product extends Model
 {
@@ -17,5 +18,9 @@ class Product extends Model
     public function order_items()
     {
         return $this->hasMany(OrderItem::class);
+    }
+    public function records()
+    {
+        return $this->hasMany(Record::class);
     }
 }
